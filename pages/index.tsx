@@ -1,5 +1,6 @@
 import axios from "axios"
 import Head from "next/head"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { RenderFromApi } from "../src/Components/RenderFromApi"
 
@@ -10,12 +11,12 @@ type APiResponse = {
 
 export default function Home() {
   const [{ component, props }, setApiResponse] = useState({} as APiResponse)
-
+  const { query: { quantity } } = useRouter()
   useEffect(() => {
-    axios.get<APiResponse>('/api/user?quantity=10').then(res => {
+    axios.get<APiResponse>(`/api/user?quantity=${quantity || 1}`).then(res => {
       setApiResponse(res.data)
     })
-  }, [])
+  }, [quantity])
   return (
     <>
       <Head>
@@ -23,7 +24,7 @@ export default function Home() {
           Server driven UI
         </title>
       </Head>
-      <div className='h-full bg-slate-200 flex flex-col p-3'>
+      <div className='h-screen bg-slate-200 flex flex-col p-3'>
         <header className="mb-5">
           <h1 className='text-4xl font-medium text-slate-800'>
             Server Driven UI
