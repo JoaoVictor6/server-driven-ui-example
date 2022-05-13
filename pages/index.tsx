@@ -33,8 +33,8 @@ export default function Home() {
           </p>
         </header>
         <section className="flex gap-5 h-100 mt-4 items-center flex-wrap mx-auto justify-center">
-          {props?.map((props) => (
-            <RenderFromApi component={component} props={props}/>
+          {props?.map((props, i) => (
+            <RenderFromApi key={`card-component__${i}`} component={component} props={props}/>
           ))}
         </section>
       </div>
